@@ -1,30 +1,14 @@
 import express from 'express';
+import routes from './routes';
+import path from 'path';
+import cors from 'cors';
 
 const app = express();
 
-const users = [
-    'Fer',
-    'Nando',
-    'juao'
-];
+app.use(cors());
+app.use(express.json());
+app.use(routes);
 
-app.get('/users', (request, response) => {
-    console.log('listagem de usuarios');
-    response.json(users);
-});
-
-app.get('/users:id', (request, response) => {
-    const id = Number(request.params.id);
-    const user = users[id];
-});
-
-app.post('/users', (request, response) => {
-    const user = {
-        name: 'Fernando',
-        email: 'fedssdd'
-    };
-
-    return response.json(user);
-});
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 app.listen(3333);
